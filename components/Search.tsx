@@ -2,11 +2,12 @@
 import React, { ChangeEvent, Suspense, useState } from "react";
 import "@styles/search.css";
 import SearchResults from "./SearchResults";
+import Link from "next/link";
 function Search() {
   const [search, setSearch] = useState("");
   return (
     <div className="search-container">
-      <div className="search">
+      <div className="d-flex">
         <input
           type="text"
           placeholder="Start typing board name or ID..."
@@ -15,7 +16,9 @@ function Search() {
             setSearch(e.target.value);
           }}
         />
-        <button>Create new</button>
+        <Link href={"/board/new"} className="new_board">
+          <button>Create new</button>
+        </Link>
       </div>
       <Suspense fallback={<h2>Loading...</h2>}>
         <SearchResults query={search} />

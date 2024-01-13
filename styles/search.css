@@ -3,21 +3,8 @@
     justify-content: space-between;
 }
 
-.search {
-    display: flex;
-}
-
-.search>input,
-button {
-    padding: 1.5rem;
-    font-size: 1.3rem;
-    background-color: rgba(128, 128, 128, 0.1);
-    border: 1px solid white;
-    transition: all .2s;
-}
-
 input {
-    width: max-content;
+    min-width: max-content;
     display: block;
     flex: 1 1 auto;
 }
@@ -27,16 +14,6 @@ button,
     transition: all .2s;
     cursor: pointer;
     text-shadow: none;
-}
-
-button:hover,
-.search_result:hover {
-    transition: all .2s;
-    text-shadow: 0 0 5px white;
-}
-
-button:hover {
-    background-color: rgba(128, 128, 128, 0.2);
 }
 
 .search_results {
