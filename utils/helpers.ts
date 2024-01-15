@@ -35,6 +35,7 @@ export const createNewBoard = async (
   router: AppRouterInstance
 ) => {
   const boardRepo = new BoardRepository();
-  const newBoard = await boardRepo.createBoard(title, todos);
+  const validTodos = todos.filter((todo) => todo.title !== "");
+  const newBoard = await boardRepo.createBoard(title, validTodos);
   router.push(`/board/${newBoard._id}`);
 };

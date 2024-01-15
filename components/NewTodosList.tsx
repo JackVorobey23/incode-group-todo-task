@@ -29,6 +29,7 @@ function NewTodosList({ newTodos, setNewTodos }: NewTodosListProps) {
                 )
               )
             }
+            value={todo.title}
             placeholder="title"
           ></input>
           <textarea
@@ -41,6 +42,7 @@ function NewTodosList({ newTodos, setNewTodos }: NewTodosListProps) {
                 )
               )
             }
+            value={todo.description}
             placeholder="description"
           ></textarea>
         </div>

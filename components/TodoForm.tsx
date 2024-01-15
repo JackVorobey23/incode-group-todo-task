@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "@styles/modal.css";
 interface TodoFormProps {
   type: string;
@@ -19,6 +19,7 @@ function TodoForm({
   submit,
   close,
 }: TodoFormProps) {
+  const [emptyError, setEmptyError] = useState<boolean>(false);
   return (
     <div className="modal_container">
       <div className="modal">
@@ -40,11 +41,25 @@ function TodoForm({
             />
           </div>
         </div>
+        <div>
+          <h3
+            className="red_button"
+            style={{ color: `${emptyError ? "red" : "transparent"}` }}
+          >
+            {" "}
+            Title field cannot be empty!
+          </h3>
+        </div>
         <button
           className="close green_button"
           onClick={() => {
-            submit();
-            close();
+            if (title === "") {
+              setEmptyError(true);
+            } else {
+              setEmptyError(false);
+              submit();
+              close();
+            }
           }}
         >
           Save

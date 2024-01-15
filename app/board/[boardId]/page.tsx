@@ -2,7 +2,6 @@
 import React from "react";
 import "@styles/board.css";
 import Board from "@components/Board";
-import { IBoard } from "@models/board";
 import ErrorPage from "@components/NotFound";
 import BoardRepository from "@repositories/boardRepository";
 
