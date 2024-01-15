@@ -32,7 +32,7 @@ function NewBoard() {
         <div className="text-vertical-center">
           <h3
             style={{
-              color: 'red',
+              color: "red",
               fontSize: `${emptyError ? "1.3rem" : "0"}`,
               transition: "all .2s",
             }}
@@ -64,7 +64,7 @@ function NewBoard() {
         <button
           className="green_button"
           onClick={() => {
-            if (title === "") {
+            if (title.trim() === "") {
               setEmptyError(true);
               return;
             }

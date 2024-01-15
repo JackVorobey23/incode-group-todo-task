@@ -19,9 +19,13 @@ function TodoAddModal({
   setTodos,
 }: TodoAddModalProps) {
   const boardRepo = new BoardRepository();
-  const closeModal = () => setPopupAddOpen(false);
   const [todoTitle, setTodoTitle] = useState("");
   const [todoDescription, setTodoDescription] = useState("");
+  const closeModal = () => {
+    setPopupAddOpen(false);
+    setTodoDescription("");
+    setTodoTitle("");
+  };
   const type = "Creating";
   const submit = () => {
     const newTodo = {

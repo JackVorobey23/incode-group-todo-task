@@ -56,7 +56,7 @@ function TodoForm({
         <button
           className="close green_button"
           onClick={() => {
-            if (title === "") {
+            if (title.trim() === "") {
               setEmptyError(true);
             } else {
               setEmptyError(false);
