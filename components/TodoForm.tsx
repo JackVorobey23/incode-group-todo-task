@@ -43,8 +43,11 @@ function TodoForm({
         </div>
         <div>
           <h3
-            className="red_button"
-            style={{ color: `${emptyError ? "red" : "transparent"}` }}
+            style={{
+              color: "red",
+              fontSize: `${emptyError ? "1.3rem" : "0"}`,
+              transition: "all .2s",
+            }}
           >
             {" "}
             Title field cannot be empty!

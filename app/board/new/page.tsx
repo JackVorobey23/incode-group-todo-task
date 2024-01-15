@@ -10,6 +10,7 @@ import { createNewBoard } from "@utils/helpers";
 
 function NewBoard() {
   const router = useRouter();
+  const [emptyError, setEmptyError] = useState<boolean>(false);
   const [title, setTitle] = useState<string>("");
   const [newTodos, setNewTodos] = useState<ITodo[]>([
     {
@@ -28,6 +29,17 @@ function NewBoard() {
           placeholder="Board title"
           onChange={(e: any) => setTitle(e.target.value)}
         />
+        <div className="text-vertical-center">
+          <h3
+            style={{
+              color: 'red',
+              fontSize: `${emptyError ? "1.3rem" : "0"}`,
+              transition: "all .2s",
+            }}
+          >
+            Board title cannot be empty!
+          </h3>
+        </div>
       </div>
       <div>
         <h2>
@@ -51,7 +63,14 @@ function NewBoard() {
       <div className="d-flex jc-center">
         <button
           className="green_button"
-          onClick={() => createNewBoard(title, newTodos, router)}
+          onClick={() => {
+            if (title === "") {
+              setEmptyError(true);
+              return;
+            }
+            setEmptyError(false);
+            createNewBoard(title, newTodos, router);
+          }}
         >
           Create
         </button>
