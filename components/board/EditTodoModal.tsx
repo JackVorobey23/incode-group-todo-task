@@ -3,7 +3,7 @@ import { ITodo } from "@models/todo";
 import React, { useEffect, useState } from "react";
 import Popup from "reactjs-popup";
 import "@styles/modal.css";
-import TodoForm from "./TodoForm";
+import TodoForm from "../general/TodoForm";
 import { updateTodos } from "@utils/helpers";
 
 interface ControlledPopupProps {

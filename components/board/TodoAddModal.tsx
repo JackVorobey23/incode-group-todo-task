@@ -3,7 +3,7 @@ import { ITodo, TodoType } from "@models/todo";
 import BoardRepository from "@repositories/boardRepository";
 import React, { useState } from "react";
 import Popup from "reactjs-popup";
-import TodoForm from "./TodoForm";
+import TodoForm from "../general/TodoForm";
 
 interface TodoAddModalProps {
   open: boolean;

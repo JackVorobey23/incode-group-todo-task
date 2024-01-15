@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Search from "./Search";
+import Search from "../search/Search";
 import TodosContainer from "./TodosContainer";
 import { ITodo } from "@models/todo";
 import { IBoard } from "@models/board";

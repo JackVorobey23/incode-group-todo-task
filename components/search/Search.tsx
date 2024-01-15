@@ -29,9 +29,13 @@ function Search() {
           <button>Create new</button>
         </Link>
       </div>
-      <Suspense fallback={<h2>Loading...</h2>}>
-        <SearchResults boards={boards} search={search} />
-      </Suspense>
+      {search !== "" ? (
+        <Suspense fallback={<h2>Loading...</h2>}>
+          <SearchResults boards={boards} search={search} />
+        </Suspense>
+      ) : (
+        <></>
+      )}
     </div>
   );
 }

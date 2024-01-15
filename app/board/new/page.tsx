@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { ITodo, TodoType } from "@models/todo";
-import NewTodosList from "@components/NewTodosList";
+import NewTodosList from "@components/board_new/NewTodosList";
 import { createNewBoard } from "@utils/helpers";
 
 function NewBoard() {

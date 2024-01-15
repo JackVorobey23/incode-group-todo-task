@@ -1,7 +1,7 @@
 "use client";
 import { useEffect } from "react";
 import styles from "./page.module.css";
-import Search from "@components/Search";
+import Search from "@components/search/Search";
 
 export default function Home() {
   return (

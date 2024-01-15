@@ -1,8 +1,8 @@
 "use client";
 import React from "react";
 import "@styles/board.css";
-import Board from "@components/Board";
-import ErrorPage from "@components/NotFound";
+import Board from "@components/board/Board";
+import ErrorPage from "@components/general/NotFound";
 import BoardRepository from "@repositories/boardRepository";
 
 export default async function Page({
