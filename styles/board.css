@@ -1,3 +1,37 @@
+.new_board_container button,
+.new_board_container input,
+.new_board_container textarea {
+    margin: 0.75rem 1.5rem;
+}
+
+.board_container {
+    margin: 3rem;
+}
+
+.new_board_container textarea {
+    height: 5rem;
+}
+
+.new_board_container input {
+    max-height: 5rem;
+    max-width: 200px;
+}
+
+.new_board_container h3 {
+    vertical-align: middle;
+    display: table-cell;
+}
+
+svg {
+    margin: 0 1.5rem;
+}
+
+.search_container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
 .board_container {
     margin: 2rem;
     display: flex;
@@ -6,4 +40,31 @@
     flex-direction: column;
     text-align: center;
     align-items: center;
+}
+
+.new_board_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    margin: 3rem;
+}
+
+.new_todo_container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 5fr;
+    align-items: center;
+    width: 100%;
+}
+
+.todo_list_container {
+    margin-top: 2rem;
+    border: 1px white solid;
+    max-height: 40vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.new_board_container>* {
+    margin: 0.75rem 1.5rem;
 }

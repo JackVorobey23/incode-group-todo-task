@@ -1,9 +1,10 @@
 "use client";
-import { Todo, TodoType } from "@models/todo";
+import { ITodo, TodoType } from "@models/todo";
 import React, { useEffect, useState } from "react";
 import ConcreteTodo from "./ConcreteTodo";
 import {
   DragDropContext,
+  DragStart,
   Draggable,
   DropResult,
   Droppable,
@@ -11,69 +12,44 @@ import {
 import "@styles/todo.css";
 import AddToDo from "./AddToDo";
 import "@styles/test.css";
-
-function reorder<T>(list: T[], startIndex: number, endIndex: number): T[] {
-  console.log("a");
-  const result = Array.from(list);
-  const [removed] = result.splice(startIndex, 1);
-  result.splice(endIndex, 0, removed);
-
-  return result;
-}
+import EditTodoModal from "./EditTodoModal";
+import BoardRepository from "@repositories/boardRepository";
+import TodoAddModal from "./TodoAddModal";
 
 interface TodosContainerProps {
-  todos: Todo[];
-  setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
+  todos: ITodo[];
+  setTodos: React.Dispatch<React.SetStateAction<ITodo[]>>;
+  boardId: string;
 }
 const onDragEnd = (result: DropResult, todosProps: TodosContainerProps) => {
-  console.log(result);
-  const { source, destination, draggableId } = result;
-  const { todos, setTodos } = todosProps;
+  const boardRepo = new BoardRepository();
+  const { destination, draggableId } = result;
+  const { todos } = todosProps;
   if (!destination) return;
-  console.log(JSON.stringify(todos));
 
   const changedTodo = todos.find((todo) => todo.id === draggableId);
-  changedTodo!.type = destination.droppableId as TodoType;
 
-  setTodos(todos);
-  console.log(JSON.stringify(todos));
+  if (!changedTodo) return;
+
+  if (changedTodo.type === destination.droppableId) return;
+
+  changedTodo.type = destination.droppableId as TodoType;
+
+  boardRepo.updateTodo(changedTodo);
 };
-const finalSpaceCharacters = [
-  {
-    id: "gary",
-    name: "Gary Goodspeed",
-    thumb: "/images/gary.png",
-  },
-  {
-    id: "cato",
-    name: "Little Cato",
-    thumb: "/images/cato.png",
-  },
-  {
-    id: "kvn",
-    name: "KVN",
-    thumb: "/images/kvn.png",
-  },
-  {
-    id: "mooncake",
-    name: "Mooncake",
-    thumb: "/images/mooncake.png",
-  },
-  {
-    id: "quinn",
-    name: "Quinn Ergon",
-    thumb: "/images/quinn.png",
-  },
-];
 
-function TodosContainer({ todos, setTodos }: TodosContainerProps) {
+function TodosContainer({ todos, setTodos, boardId }: TodosContainerProps) {
   const todoTypes = Object.values(TodoType);
-  const [isBrowser, setIsBrowser] = useState(false);
-  const [isDragging, setIsDragging] = useState(false);
+  const [isBrowser, setIsBrowser] = useState<boolean>(false);
+  const [isDragging, setIsDragging] = useState<boolean>(false);
+  const [popupTodo, setEditPopup] = useState<ITodo | null>(null);
+  const [popupAddOpen, setPopupAddOpen] = useState<boolean>(false);
   let lastTodoIndex = 1;
+
   useEffect(() => {
+    // check if rendering is on browser,
+    // otherwise drag and drop will not work.
     if (typeof window !== "undefined") {
-      console.log("aa");
       setIsBrowser(true);
     }
   }, []);
@@ -82,11 +58,11 @@ function TodosContainer({ todos, setTodos }: TodosContainerProps) {
     <div className="todos_container">
       {isBrowser ? (
         <DragDropContext
-          onDragStart={() => {
+          onDragStart={(a: DragStart) => {
             setIsDragging(true);
           }}
           onDragEnd={(result: DropResult) => {
-            onDragEnd(result, { setTodos, todos });
+            onDragEnd(result, { setTodos, todos, boardId });
             setIsDragging(false);
           }}
         >
@@ -103,23 +79,28 @@ function TodosContainer({ todos, setTodos }: TodosContainerProps) {
                   <div ref={provided.innerRef} {...provided.droppableProps}>
                     {todos
                       .filter((todo) => todo.type === todoT)
-                      .map((todo, todoIndex) => (
+                      .map((todo) => (
                         <Draggable
                           draggableId={todo.id}
-                          key={`${TypeIndex}-${todoIndex}`}
+                          key={todo.id}
                           index={lastTodoIndex++}
                         >
                           {(provided) => (
                             <ConcreteTodo
+                              setPopupTodo={setEditPopup}
                               provided={provided}
                               todo={todo}
                               key={todo.id}
+                              setTodos={setTodos}
                             />
                           )}
                         </Draggable>
                       ))}
                     {todoT === TodoType.ToDo ? (
-                      <AddToDo hidden={isDragging} />
+                      <AddToDo
+                        hidden={isDragging}
+                        openAddTodo={() => setPopupAddOpen(true)}
+                      />
                     ) : (
                       <></>
                     )}
@@ -131,6 +112,19 @@ function TodosContainer({ todos, setTodos }: TodosContainerProps) {
           ))}
         </DragDropContext>
       ) : null}
+      <EditTodoModal
+        open={!!popupTodo}
+        setTodos={setTodos}
+        todo={popupTodo}
+        setPopupTodo={setEditPopup}
+      />
+
+      <TodoAddModal
+        open={popupAddOpen}
+        setPopupAddOpen={setPopupAddOpen}
+        boardId={boardId}
+        setTodos={setTodos}
+      />
     </div>
   );
 }

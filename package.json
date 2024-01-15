@@ -12,13 +12,16 @@
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
+    "dotenv": "^16.3.1",
+    "mongoose": "^8.0.4",
     "next": "14.0.4",
     "react": "^18",
     "react-beautiful-dnd": "^13.1.1",
     "react-dom": "^18",
     "react-loader-spinner": "^6.1.6",
     "react-spinners": "^0.13.8",
-    "reactjs-popup": "^2.0.6"
+    "reactjs-popup": "^2.0.6",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/node": "^20",
