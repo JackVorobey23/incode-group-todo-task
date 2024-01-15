@@ -1,11 +1,11 @@
-import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Todo, TodoType } from "@models/todo";
+import { ITodo } from "@models/todo";
 import React from "react";
 
 interface NewTodosListProps {
-  newTodos: Todo[];
-  setNewTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
+  newTodos: ITodo[];
+  setNewTodos: React.Dispatch<React.SetStateAction<ITodo[]>>;
 }
 
 function NewTodosList({ newTodos, setNewTodos }: NewTodosListProps) {

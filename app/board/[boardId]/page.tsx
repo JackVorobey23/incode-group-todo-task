@@ -1,27 +1,29 @@
 "use client";
-import { getBoardById } from "@components/data";
-import React, { Suspense, useState } from "react";
-import { Hearts } from "react-loader-spinner";
+import React from "react";
 import "@styles/board.css";
 import Board from "@components/Board";
+import { IBoard } from "@models/board";
+import ErrorPage from "@components/NotFound";
+import BoardRepository from "@repositories/boardRepository";
 
-async function fetchData(boardId: string) {
-  const boardInfo = await getBoardById(boardId);
-  if (boardInfo) {
-    return boardInfo;
-  } else {
-    throw new Error(`Board with id ${boardId} does not exist`);
-  }
-}
-
-export async function Page({ params }: { params: { boardId: string } }) {
-  const board = await fetchData(params.boardId);
+export default async function Page({
+  params,
+}: {
+  params: { boardId: string };
+}) {
+  const boardRepo = new BoardRepository();
+  const board = await boardRepo.getBoardById(params.boardId);
 
   return (
-    <Suspense fallback={<Hearts color="green" />}>
-      <Board board={board} />
-    </Suspense>
+    <div>
+      {board ? (
+        <Board board={board} />
+      ) : (
+        <ErrorPage
+          errorMessage={`Error! board with id '${params.boardId}' does not esist!`}
+          tip="try to found your board using search on the main page instead of going to concrete URL! "
+        />
+      )}
+    </div>
   );
 }
-
-export default Page;

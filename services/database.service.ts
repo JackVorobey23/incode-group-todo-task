@@ -1,11 +1,8 @@
-import { client } from "@utils/client";
-
-enum DBCollection {
-  todoCollection = "todo",
-  boardsCollection = "boards",
-}
-
-class DBService {
+import BoardModel, { IBoard } from "@models/board";
+import { ITodo } from "@models/todo";
+import dotenv from "dotenv";
+import mongoose from "mongoose";
+export default class DBService {
   private static dbservice: DBService;
   private static databaseConnected: boolean = false;
 
@@ -19,21 +16,112 @@ class DBService {
     return DBService.dbservice;
   }
 
-  public connectToDb() {
-    if (!DBService.databaseConnected) {
+  public async connectToDb() {
+    if (DBService.databaseConnected) {
       console.log("DB already connected!");
     } else {
-      client.connect();
-      DBService.databaseConnected = true;
+      try {
+        const connectionString = process.env.MONGODB_URI || "";
+        mongoose.connect(connectionString);
+
+        mongoose.connection.addListener("error", (err) => {
+          console.error("Error from mongoDB!", err);
+        });
+        mongoose.connection.addListener("disconnected", () => {
+          DBService.databaseConnected = false;
+        });
+        DBService.databaseConnected = true;
+      } catch (error) {
+        console.error("Connection to DB failed! Error: ", error);
+        DBService.databaseConnected = false;
+      }
     }
   }
 
-  public closeConnection() {
-    client.close();
+  public async closeConnection() {
+    await mongoose.connection.close();
+    DBService.databaseConnected = false;
   }
 
-  public getCollection(collection: DBCollection) {
-    const db = client.db();
-    const todoCollection = db.collection(collection);
+  public async getAllBoards() {
+    await this.connectToDb();
+
+    const allBoards = await BoardModel.find();
+
+    return allBoards;
+  }
+
+  public async getBoardById(boardId: string) {
+    await this.connectToDb();
+
+    const board = await BoardModel.findById(boardId);
+
+    return board;
+  }
+
+  public async createBoard(name: string, todos: ITodo[]) {
+    await this.connectToDb();
+
+    const newBoard = await BoardModel.create({
+      name: name,
+      todos: todos,
+      _id: new mongoose.Types.ObjectId(),
+    });
+    await newBoard.save();
+    return newBoard;
+  }
+
+  public async removeBoard(boardId: string) {
+    await this.connectToDb();
+
+    const board = await BoardModel.findByIdAndDelete(boardId);
+
+    await board.save();
+
+    return board;
+  }
+
+  public async getBoard(boardId: string) {
+    await this.connectToDb();
+
+    try {
+      const board = BoardModel.findByIdAndDelete(boardId);
+      return board;
+    } catch {
+      return null;
+    }
+  }
+
+  public async getBoardByTodoId(todoId: string) {
+    await this.connectToDb();
+
+    try {
+      const board = BoardModel.findOne({ "todos.id": todoId });
+      return board;
+    } catch {
+      return null;
+    }
+  }
+
+  public async createTodo(todo: ITodo, boardId: string) {
+    await this.connectToDb();
+
+    const board = await BoardModel.findById(boardId);
+
+    board.todos.push(todo);
+    await board.save();
+
+    return board;
+  }
+
+  public async removeTodo(todoId: string) {
+    await this.connectToDb();
+
+    const board = await BoardModel.findOne({ "todos.id": todoId });
+
+    board.todos = board.todos.filter((todo: ITodo) => todo.id !== todoId);
+    await board.save();
+
+    return todoId;
   }
 }

@@ -1,0 +1,22 @@
+.error_container {
+    margin: 7rem;
+    border: 1px solid rgb(255, 103, 103);
+    background-color: rgba(255, 103, 103, 0.2);
+}
+.error_container > * {
+    margin: 3rem;
+}
+
+.error_tip {
+    color: gold;
+}
+
+.error_message {
+    color: rgb(255, 92, 92);
+}
+
+.home_link {
+    text-decoration: underline;
+    color: rgb(124, 192, 192);
+    display: block;
+}

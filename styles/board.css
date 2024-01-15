@@ -4,11 +4,15 @@
     margin: 0.75rem 1.5rem;
 }
 
+.board_container {
+    margin: 3rem;
+}
+
 .new_board_container textarea {
     height: 5rem;
 }
 
-.new_board_container  input {
+.new_board_container input {
     max-height: 5rem;
     max-width: 200px;
 }
@@ -20,6 +24,12 @@
 
 svg {
     margin: 0 1.5rem;
+}
+
+.search_container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 .board_container {
@@ -37,7 +47,7 @@ svg {
     flex-direction: column;
     justify-content: center;
     text-align: center;
-    margin: 5rem;
+    margin: 3rem;
 }
 
 .new_todo_container {
@@ -53,10 +63,6 @@ svg {
     max-height: 40vh;
     overflow-y: auto;
     overflow-x: hidden;
-}
-
-.table_cell {
-    display: table;
 }
 
 .new_board_container>* {

@@ -1,17 +1,19 @@
 "use client";
 import React, { useState } from "react";
 import "@styles/board.css";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { Todo, TodoType } from "@models/todo";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { ITodo, TodoType } from "@models/todo";
 import NewTodosList from "@components/NewTodosList";
+import { createNewBoard } from "@utils/helpers";
+
 function NewBoard() {
   const router = useRouter();
-  const [newTodos, setNewTodos] = useState<Todo[]>([
+  const [title, setTitle] = useState<string>("");
+  const [newTodos, setNewTodos] = useState<ITodo[]>([
     {
-      id: "1",
+      id: crypto.randomUUID(),
       description: "Description",
       title: "Todo 1",
       type: TodoType.ToDo,
@@ -21,14 +23,15 @@ function NewBoard() {
     <div className="new_board_container">
       <h1 className="new_board_title">Creating new board</h1>
       <div className="d-flex jc-center">
-        <div className="table_cell">
-          <h3>Board title</h3>
-        </div>
-        <input type="text" placeholder="" />
+        <input
+          type="text"
+          placeholder="Board title"
+          onChange={(e: any) => setTitle(e.target.value)}
+        />
       </div>
       <div>
         <h2>
-          Click on plus to add some to-do's!
+          Click on plus to add some to-do&apos;s!
           <FontAwesomeIcon
             icon={faPlus}
             onClick={() => {
@@ -46,7 +49,12 @@ function NewBoard() {
         <NewTodosList newTodos={newTodos} setNewTodos={setNewTodos} />
       </div>
       <div className="d-flex jc-center">
-        <button className="green_button">Create</button>
+        <button
+          className="green_button"
+          onClick={() => createNewBoard(title, newTodos, router)}
+        >
+          Create
+        </button>
         <button className="red_button" onClick={() => router.back()}>
           Cancel
         </button>

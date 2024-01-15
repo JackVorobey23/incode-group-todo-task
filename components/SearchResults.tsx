@@ -1,29 +1,39 @@
-import Board from "@models/board";
-import React, { use } from "react";
-import { getSearchResults } from "./data";
+import { IBoard } from "@models/board";
+import React from "react";
 import Link from "next/link";
 
-async function SearchResults({ query }: { query: string }) {
-  if (query === "") {
-    return null;
-  }
-  const boards: Board[] = await getSearchResults(query);
+async function SearchResults({
+  boards,
+  search,
+}: {
+  boards: IBoard[];
+  search: string;
+}) {
   if (boards.length === 0) {
     return (
       <p>
-        <i>No matches for "{query}"</i>
+        <i>No matches</i>
       </p>
     );
   }
+  if (search === "") {
+    return;
+  }
+  const boardsToDisplay = boards.filter(
+    (board) =>
+      board._id.toString().toLocaleLowerCase().includes(search) ||
+      board.name.toLocaleLowerCase().includes(search)
+  );
+
   return (
     <div className="search_results">
-      {boards.map((board: Board) => (
+      {boardsToDisplay.map((board: IBoard) => (
         <Link
-          href={`/board/${board.id}`}
+          href={`/board/${board._id}`}
           className="search_result"
-          key={board.id}
+          key={board._id.toString()}
         >
-          Name: {board.name}, Id: ({board.id})
+          Name: {board.name}, Id: ({board._id.toString()})
         </Link>
       ))}
     </div>
