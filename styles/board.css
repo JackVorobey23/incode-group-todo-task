@@ -4,10 +4,6 @@
     margin: 0.75rem 1.5rem;
 }
 
-.board_container {
-    margin: 3rem;
-}
-
 .new_board_container textarea {
     height: 5rem;
 }
@@ -41,7 +37,9 @@ svg {
     text-align: center;
     align-items: center;
 }
-
+.board_container > h1{
+    margin: 1rem;
+}
 .new_board_container {
     display: flex;
     flex-direction: column;

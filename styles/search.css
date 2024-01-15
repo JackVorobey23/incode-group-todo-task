@@ -1,6 +1,12 @@
 .search-container {
-    width: 80%;
+    width: 95%;
     justify-content: space-between;
+    position: relative;
+}
+
+.search-container>* {
+    width: 100%;
+    height: 100%;
 }
 
 input {
@@ -17,11 +23,18 @@ button,
 }
 
 .search_results {
+    position: absolute;
     border: 1px solid white;
+    background-color: rgb(var(--background-end-rgb));
+    height: auto;
 }
 
 .search_result {
     cursor: pointer;
     margin: 1rem;
     display: block;
+}
+
+.new_board > * {
+    height: 100%;
 }

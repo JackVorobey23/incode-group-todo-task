@@ -27,7 +27,7 @@ async function SearchResults({
 
   return (
     <div className="search_results">
-      {boardsToDisplay.map((board: IBoard) => (
+      {boardsToDisplay.slice(0,5).map((board: IBoard) => (
         <Link
           href={`/board/${board._id}`}
           className="search_result"

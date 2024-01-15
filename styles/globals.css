@@ -80,6 +80,8 @@ body {
   background: linear-gradient(to bottom,
       transparent,
       rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
+      height: 100vh;
+      overflow-y: hidden;
 }
 
 a {
@@ -128,6 +130,7 @@ button:hover {
 }
 
 .red_button {
+  text-wrap: nowrap;
   color: #d94444;
   border-color: #d94444;
 }

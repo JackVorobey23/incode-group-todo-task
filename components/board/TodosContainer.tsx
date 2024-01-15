@@ -66,20 +66,28 @@ function TodosContainer({ todos, setTodos, boardId }: TodosContainerProps) {
             setIsDragging(false);
           }}
         >
-          {todoTypes.map((todoT, TypeIndex) => (
-            <Droppable
-              droppableId={`${todoT}`}
-              type="COLUMN"
-              direction="vertical"
-              key={`droppable-${TypeIndex}`}
-            >
-              {(provided) => (
-                <div className="todo_table" key={TypeIndex}>
-                  <h2>{todoT}</h2>
-                  <div ref={provided.innerRef} {...provided.droppableProps}>
-                    {todos
-                      .filter((todo) => todo.type === todoT)
-                      .map((todo) => (
+          {todoTypes.map((todoT, TypeIndex) => {
+            const tableTodos = todos.filter((todo) => todo.type === todoT);
+            return (
+              <Droppable
+                droppableId={`${todoT}`}
+                type="COLUMN"
+                direction="vertical"
+                key={`droppable-${TypeIndex}`}
+              >
+                {(provided) => (
+                  <div
+                    className="todo_table"
+                    key={TypeIndex}
+                    style={{
+                      overflowY: `${
+                        tableTodos.length >= 4 ? "scroll" : "hidden"
+                      }`,
+                    }}
+                  >
+                    <h2>{todoT}</h2>
+                    <div ref={provided.innerRef} {...provided.droppableProps}>
+                      {tableTodos.map((todo) => (
                         <Draggable
                           draggableId={todo.id}
                           key={todo.id}
@@ -96,20 +104,21 @@ function TodosContainer({ todos, setTodos, boardId }: TodosContainerProps) {
                           )}
                         </Draggable>
                       ))}
-                    {todoT === TodoType.ToDo ? (
-                      <AddToDo
-                        hidden={isDragging}
-                        openAddTodo={() => setPopupAddOpen(true)}
-                      />
-                    ) : (
-                      <></>
-                    )}
-                    {provided.placeholder}
+                      {todoT === TodoType.ToDo ? (
+                        <AddToDo
+                          hidden={isDragging}
+                          openAddTodo={() => setPopupAddOpen(true)}
+                        />
+                      ) : (
+                        <></>
+                      )}
+                      {provided.placeholder}
+                    </div>
                   </div>
-                </div>
-              )}
-            </Droppable>
-          ))}
+                )}
+              </Droppable>
+            );
+          })}
         </DragDropContext>
       ) : null}
       <EditTodoModal
