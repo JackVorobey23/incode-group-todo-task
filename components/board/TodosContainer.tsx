@@ -76,15 +76,7 @@ function TodosContainer({ todos, setTodos, boardId }: TodosContainerProps) {
                 key={`droppable-${TypeIndex}`}
               >
                 {(provided) => (
-                  <div
-                    className="todo_table"
-                    key={TypeIndex}
-                    style={{
-                      overflowY: `${
-                        tableTodos.length >= 4 ? "scroll" : "hidden"
-                      }`,
-                    }}
-                  >
+                  <div className="todo_table" key={TypeIndex}>
                     <h2>{todoT}</h2>
                     <div ref={provided.innerRef} {...provided.droppableProps}>
                       {tableTodos.map((todo) => (
