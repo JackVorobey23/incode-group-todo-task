@@ -1,4 +1,3 @@
-import { IBoard } from "@models/board";
 import { ITodo } from "@models/todo";
 import DBService from "@services/database.service";
 

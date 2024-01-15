@@ -9,7 +9,8 @@
     padding: 2rem;
     border: solid 1px white;
 }
-.todo_table > div {
+
+.todo_table>div {
     height: 100%;
 }
 

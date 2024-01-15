@@ -3,7 +3,8 @@
     border: 1px solid rgb(255, 103, 103);
     background-color: rgba(255, 103, 103, 0.2);
 }
-.error_container > * {
+
+.error_container>* {
     margin: 3rem;
 }
 

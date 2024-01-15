@@ -1,5 +1,5 @@
 "use client";
-import React, { ChangeEvent, Suspense, useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import "@styles/search.css";
 import SearchResults from "./SearchResults";
 import Link from "next/link";
